@@ -8,7 +8,7 @@
 
 
 <%
-    User user = (User) session.getAttribute("user");
+    User user = (User) request.getAttribute("user");
 %>
 <h1>Login Successful</h1>
 <h3>Hello <%= user.getUserName() %></h3>

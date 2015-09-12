@@ -3,6 +3,7 @@ package in.ka4tik;
 import in.ka4tik.model.User;
 import in.ka4tik.service.LoginService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,9 @@ public class LoginServlet extends HttpServlet{
         boolean result = loginService.authenticate(userId,password);
         if (result) {
             User user = loginService.getUser(userId);
-            req.getSession().setAttribute("user",user);
-            resp.sendRedirect("success.jsp");
+            req.setAttribute("user",user);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("success.jsp");
+            dispatcher.forward(req,resp);
         }
         else{
             resp.sendRedirect("login.jsp");
