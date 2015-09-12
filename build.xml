@@ -18,6 +18,9 @@
         <fileset dir="${appserver.lib}">
             <include name="servlet*.jar"/>
         </fileset>
+        <fileset dir="${javaee.lib}">
+            <include name="*.jar"/>
+        </fileset>
         <pathelement path="${build.dir}"/>
     </path>
 
@@ -40,15 +43,16 @@
     </target>
 
     <target name="build" description="Compile main source tree java files">
+        <delete dir="${build.dir}"/>
         <mkdir dir="${build.dir}"/>
         <javac destdir="${build.dir}" source="1.5" target="1.5" debug="true"
-               deprecation="false" optimize="false" failonerror="true">
+            deprecation="false" optimize="false" failonerror="true">
             <src path="${src.dir}"/>
             <classpath refid="master-classpath"/>
         </javac>
     </target>
 
-    <target name="deploy" depends="build" description="Deploy application">
+    <target name="deploy" depends="build, clean" description="Deploy application">
         <copy todir="${deploy.path}/${name}" preservelastmodified="true">
             <fileset dir="${web.dir}">
                 <include name="**/*.*"/>
@@ -56,9 +60,12 @@
         </copy>
     </target>
 
+    <target name="clean">
+        <delete dir="${deploy.path}/${name}" />
+    </target>
     <target name="deploywar" depends="build" description="Deploy application as a WAR file">
         <war destfile="${name}.war"
-             webxml="${web.dir}/WEB-INF/web.xml">
+            webxml="${web.dir}/WEB-INF/web.xml">
             <fileset dir="${web.dir}">
                 <include name="**/*.*"/>
             </fileset>
@@ -100,37 +107,37 @@
 
     <target name="install" description="Install application in Tomcat">
         <install url="${tomcat.manager.url}"
-                 username="${tomcat.manager.username}"
-                 password="${tomcat.manager.password}"
-                 path="/${name}"
-                 war="${name}"/>
+            username="${tomcat.manager.username}"
+            password="${tomcat.manager.password}"
+            path="/${name}"
+            war="${name}"/>
     </target>
 
     <target name="reload" description="Reload application in Tomcat">
         <reload url="${tomcat.manager.url}"
-                username="${tomcat.manager.username}"
-                password="${tomcat.manager.password}"
-                path="/${name}"/>
+            username="${tomcat.manager.username}"
+            password="${tomcat.manager.password}"
+            path="/${name}"/>
     </target>
 
     <target name="start" description="Start Tomcat application">
         <start url="${tomcat.manager.url}"
-               username="${tomcat.manager.username}"
-               password="${tomcat.manager.password}"
-               path="/${name}"/>
+            username="${tomcat.manager.username}"
+            password="${tomcat.manager.password}"
+            path="/${name}"/>
     </target>
 
     <target name="stop" description="Stop Tomcat application">
         <stop url="${tomcat.manager.url}"
-              username="${tomcat.manager.username}"
-              password="${tomcat.manager.password}"
-              path="/${name}"/>
+            username="${tomcat.manager.username}"
+            password="${tomcat.manager.password}"
+            path="/${name}"/>
     </target>
 
     <target name="list" description="List Tomcat applications">
         <list url="${tomcat.manager.url}/text"
-              username="${tomcat.manager.username}"
-              password="${tomcat.manager.password}"/>
+            username="${tomcat.manager.username}"
+            password="${tomcat.manager.password}"/>
     </target>
 
     <!-- End Tomcat tasks -->
