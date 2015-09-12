@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="TomCatTest" basedir="." default="usage">
+<project name="TomCatTest" basedir="." default="deploy">
     <property file="build.properties"/>
 
     <property name="src.dir" value="src"/>

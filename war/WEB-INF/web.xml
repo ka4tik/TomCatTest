@@ -33,4 +33,28 @@
         <url-pattern>/Test</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SessionServlet</servlet-name>
+        <servlet-class>in.ka4tik.SessionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SessionServlet</servlet-name>
+        <url-pattern>/SessionServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>InitJSP</servlet-name>
+        <jsp-file>/initpage.jsp</jsp-file>
+        <init-param>
+            <param-name>defaultUser</param-name>
+            <param-value>kartik</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>InitJSP</servlet-name>
+        <url-pattern>/initpage.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>
